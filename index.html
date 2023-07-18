@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alpine js todolist</title>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.3/dist/cdn.min.js"
+    ></script>
+  </head>
+  <body>
+    <h1>Todo ALPINE JS</h1>
+    <div x-data="todos">
+      <section>
+        <form @submit.prevent="saveTodo">
+          <input
+            type="text"
+            @change="todoForm = $event.target.value"
+            x-bind:value="todoForm"
+            name="todo"
+            placeholder="enter new todo"
+          />
+          <button type="submit">
+            <template x-if="editMode !== null"> <span>update</span> </template>
+            <template x-if="editMode === null"> <span>save</span> </template>
+          </button>
+        </form>
+      </section>
+
+      <ul>
+        <template x-for="todo in datas">
+          <li>
+            <template x-if="todo.done">
+              <div style="display: inline">
+                <s x-text="todo.title"></s>
+                <button @click="undoneTodo(`${todo.id}`)">undone</button>
+              </div>
+            </template>
+            <template x-if="!todo.done">
+              <div style="display: inline">
+                <span x-text="todo.title"></span>
+                <button @click="doneTodo(`${todo.id}`)">done</button>
+              </div>
+            </template>
+
+            <button @click="editTodo(`${todo.id}`)">edit</button>
+            <button @click="deleteTodo(`${todo.id}`)">delete</button>
+          </li>
+        </template>
+      </ul>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
